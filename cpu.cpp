@@ -96,7 +96,7 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x46): //r1 = B , r2 = HL
-                    b = h | l << 8;
+                    b = h | l << 8u;
                     cpu_cycles = 8;
                     pc++;
                     break;
@@ -136,7 +136,7 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x4E): //r1 = C , r2 = HL
-                    c = h | l << 8;
+                    c = h | l << 8u;
                     cpu_cycles = 8;
                     pc++;
                     break;
@@ -176,7 +176,7 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x56): //r1 = D , r2 = HL
-                    d = h | l << 8;
+                    d = h | l << 8u;
                     cpu_cycles = 8;
                     pc++;
                     break;
@@ -216,7 +216,7 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x5E): //r1 = E , r2 = HL
-                    e = h | l<<8;
+                    e = h | l << 8u;
                     cpu_cycles = 8;
                     pc++;
                     break;
@@ -256,7 +256,7 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x66): //r1 = H , r2 = HL
-                    h = h | l<<8;
+                    h = h | l << 8u;
                     cpu_cycles = 8;
                     pc++;
                     break;
@@ -265,8 +265,82 @@ void interpret(uint8_t dissassembly){
                     cpu_cycles = 4;
                     pc++;
                     break;
-                case (0x7F): //r1 = A , r2 = A
-                    //unnecesary to execute
+                case (0x68): //r1 = L , r2 = B
+                    l = b;
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x69): //r1 = L , r2 = C
+                    l = c;
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x6A): //r1 = L , r2 = D
+                    l = d;
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x6B): //r1 = L , r2 = E
+                    l = e;
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x6C): //r1 = L , r2 = H
+                    l = h;
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x6D): //r1 = L , r2 = L
+                    //unnecesary to implement
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x6E): //r1 = L , r2 = HL
+                    l = h | l << 8u;
+                    cpu_cycles = 8;
+                    pc++;
+                    break;
+                case (0x6F): //r1 = L , r2 = A
+                    l = a;
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x70): //r1 = HL , r2 = B
+                    l = b;
+                    cpu_cycles = 8;
+                    pc++;
+                    break;
+                case (0x71): //r1 = A , r2 = C
+                    l = c;
+                    cpu_cycles = 8;
+                    pc++;
+                    break;
+                case (0x72): //r1 = HL , r2 = D
+                    l = d;
+                    cpu_cycles = 8;
+                    pc++;
+                    break;
+                case (0x73): //r1 = HL , r2 = E
+                    l = e;
+                    cpu_cycles = 8;
+                    pc++;
+                    break;
+                case (0x74): //r1 = HL , r2 = H
+                    l = h;
+                    cpu_cycles = 8;
+                    pc++;
+                    break;
+                case (0x75): //r1 = HL , r2 = L
+                    //no need to implement since l = l isnt needed to be implemented
+                    cpu_cycles = 8;
+                    pc++;
+                    break;
+                case (0x76): //HALT
+                    //wait for an idea to implement lol
+                    pc++;
+                    break;
+                case (0x77): //r1 = HL , r2 = A
+                    l = a;
                     cpu_cycles = 4;
                     pc++;
                     break;
@@ -301,8 +375,13 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x7E): //r1 = A , r2 = HL
-                    a = h | l << 8;
+                    a = h | l << 8u;
                     cpu_cycles = 8;
+                    pc++;
+                    break;
+                case (0x7F): //r1 = A , r2 = A
+                    //unnecesary to execute
+                    cpu_cycles = 4;
                     pc++;
                     break;
 

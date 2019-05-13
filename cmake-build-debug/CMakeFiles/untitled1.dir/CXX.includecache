@@ -6,6 +6,20 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/cerbe/CLionProjects/untitled1/cpu.cpp
+iostream
+-
+cpu.h
+C:/Users/cerbe/CLionProjects/untitled1/cpu.h
+
+C:/Users/cerbe/CLionProjects/untitled1/cpu.h
+
+C:/Users/cerbe/CLionProjects/untitled1/main.cpp
+iostream
+-
+cpu.h
+C:/Users/cerbe/CLionProjects/untitled1/cpu.h
+
 C:/Users/cerbe/CLionProjects/untitled1/mmu.cpp
 cstdint
 -
