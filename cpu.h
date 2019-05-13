@@ -1,5 +1,5 @@
 //
-// Created by cerbe on 12.05.2019.
+// Created by Ole H. on 12.05.2019.
 //
 
 #ifndef UNTITLED1_CPU_H
