@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/cerbe/CLionProjects/untitled1/mmu.cpp
+cstdint
+-
+mmu.h
+C:/Users/cerbe/CLionProjects/untitled1/mmu.h
+
+C:/Users/cerbe/CLionProjects/untitled1/mmu.h
+
