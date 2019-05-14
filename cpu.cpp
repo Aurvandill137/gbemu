@@ -4,6 +4,9 @@
 
 #include <iostream>
 #include "cpu.h"
+#include "mmu.h"
+
+#define HL (h<<8 | l)
 
 using namespace std;
 
@@ -42,27 +45,97 @@ void interpret(uint8_t dissassembly){
         if (extended_opcode == 0) {
 
             switch (dissassembly) {
-
-                //ld opcode
-                //ld nn,n put nn into n
-                case (0x06): // nn = B
-
+                case (0x00): // NOP
+                    //NOP
+                    cpu_cycles = 4;
+                    pc++;
                     break;
-                case (0x0E): // nn = C
-
+                case (0x01): // LD BC,d16
+                    b = read_address(pc+1);
+                    c = read_address(pc+2);
+                    cpu_cycles = 12;
+                    pc+=3;
                     break;
-                case (0x16): // nn = D
-
+                case (0x02): // LD (BC),A
+                    write_address(a,(b<<8u|c));
+                    cpu_cycles = 8;
+                    pc++;
                     break;
-                case (0x1E): // nn = E
-
+                case (0x03): // INC BC
+                    if(c == 255){
+                        c = 0;
+                        if(b == 255){
+                            b = 0;
+                        } else {
+                           c++;
+                        }
+                    }else {
+                        c++;
+                    }
+                    cpu_cycles = 4;
+                    pc++;
                     break;
-                case (0x26): // nn = H
+                case (0x04): // LD (BC),A
 
+                    cpu_cycles = 4;
+                    pc++;
                     break;
-                case (0x2E): // nn = L
+                case (0x05): // LD (BC),A
 
+                    cpu_cycles = 4;
+                    pc++;
                     break;
+                case (0x06): // LD (BC),A
+
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x07): // LD (BC),A
+
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x08): // LD (BC),A
+
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x09): // LD (BC),A
+
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x0A): // LD (BC),A
+
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x0B): // LD (BC),A
+
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x0C): // LD (BC),A
+
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x0D): // LD (BC),A
+
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x0E): // LD (BC),A
+
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+                case (0x0F): // LD (BC),A
+
+                    cpu_cycles = 4;
+                    pc++;
+                    break;
+
                 //ld r1, r2   put value r2 into r1
 
                 case (0x40): //r1 = B , r2 = B
@@ -96,7 +169,7 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x46): //r1 = B , r2 = HL
-                    b = h | l << 8u;
+                    b = read_address(HL);
                     cpu_cycles = 8;
                     pc++;
                     break;
@@ -136,7 +209,7 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x4E): //r1 = C , r2 = HL
-                    c = h | l << 8u;
+                    c = read_address(HL);
                     cpu_cycles = 8;
                     pc++;
                     break;
@@ -176,7 +249,7 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x56): //r1 = D , r2 = HL
-                    d = h | l << 8u;
+                    d = read_address(HL);
                     cpu_cycles = 8;
                     pc++;
                     break;
@@ -216,7 +289,7 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x5E): //r1 = E , r2 = HL
-                    e = h | l << 8u;
+                    e = read_address(HL);
                     cpu_cycles = 8;
                     pc++;
                     break;
@@ -256,7 +329,7 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x66): //r1 = H , r2 = HL
-                    h = h | l << 8u;
+                    h = read_address(HL);
                     cpu_cycles = 8;
                     pc++;
                     break;
@@ -296,7 +369,7 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x6E): //r1 = L , r2 = HL
-                    l = h | l << 8u;
+                    l = read_address(HL);
                     cpu_cycles = 8;
                     pc++;
                     break;
@@ -375,7 +448,7 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x7E): //r1 = A , r2 = HL
-                    a = h | l << 8u;
+                    a = read_address(HL);
                     cpu_cycles = 8;
                     pc++;
                     break;
