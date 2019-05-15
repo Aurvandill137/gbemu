@@ -20,7 +20,7 @@
  * 0xFF80 - 0xFFFE - Internal RAM
  * 0xFFFF          - Interrupt enable regsiter
  */
-unsigned char mem[0xFFFF]; //memory
+uint8_t mem[0xFFFF]; //memory
 
 //TODO: add mbc Controller emulation
 //TODO: add missing functionaity in write_adress

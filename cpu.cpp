@@ -6,7 +6,8 @@
 #include "cpu.h"
 #include "mmu.h"
 
-#define HL (h<<8 | l)
+#define HL (h << 8 | l)
+#define BC (b << 8 | c)
 
 using namespace std;
 
@@ -39,16 +40,13 @@ void interpret(uint8_t dissassembly){
         extended_opcode = 1;
         pc++;
 
-
     }else {
 
         if (extended_opcode == 0) {
 
             switch (dissassembly) {
                 case (0x00): // NOP
-                    //NOP
-                    cpu_cycles = 4;
-                    pc++;
+                    nop();
                     break;
                 case (0x01): // LD BC,d16
                     b = read_address(pc+1);
@@ -57,9 +55,7 @@ void interpret(uint8_t dissassembly){
                     pc+=3;
                     break;
                 case (0x02): // LD (BC),A
-                    write_address(a,(b<<8u|c));
-                    cpu_cycles = 8;
-                    pc++;
+                    load_to_mem(BC,a);
                     break;
                 case (0x03): // INC BC
                     if(c == 255){
@@ -75,65 +71,41 @@ void interpret(uint8_t dissassembly){
                     cpu_cycles = 4;
                     pc++;
                     break;
-                case (0x04): // LD (BC),A
+                case (0x04): //
 
-                    cpu_cycles = 4;
-                    pc++;
                     break;
-                case (0x05): // LD (BC),A
+                case (0x05): //
 
-                    cpu_cycles = 4;
-                    pc++;
                     break;
-                case (0x06): // LD (BC),A
+                case (0x06): //
 
-                    cpu_cycles = 4;
-                    pc++;
                     break;
-                case (0x07): // LD (BC),A
+                case (0x07): //
 
-                    cpu_cycles = 4;
-                    pc++;
                     break;
-                case (0x08): // LD (BC),A
+                case (0x08): //
 
-                    cpu_cycles = 4;
-                    pc++;
                     break;
-                case (0x09): // LD (BC),A
+                case (0x09): //
 
-                    cpu_cycles = 4;
-                    pc++;
                     break;
-                case (0x0A): // LD (BC),A
+                case (0x0A): //
 
-                    cpu_cycles = 4;
-                    pc++;
                     break;
-                case (0x0B): // LD (BC),A
+                case (0x0B): //
 
-                    cpu_cycles = 4;
-                    pc++;
                     break;
-                case (0x0C): // LD (BC),A
+                case (0x0C): //
 
-                    cpu_cycles = 4;
-                    pc++;
                     break;
-                case (0x0D): // LD (BC),A
+                case (0x0D): //
 
-                    cpu_cycles = 4;
-                    pc++;
                     break;
-                case (0x0E): // LD (BC),A
+                case (0x0E): //
 
-                    cpu_cycles = 4;
-                    pc++;
                     break;
-                case (0x0F): // LD (BC),A
+                case (0x0F): //
 
-                    cpu_cycles = 4;
-                    pc++;
                     break;
                 case (0x40): //LD B,B
                     //not necessary to implement
@@ -141,289 +113,202 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x41): //LD B,C
-                    load(b,c);
+                    load(&b,c);
                     break;
                 case (0x42): //LD B,D
-                    load(b,d);
+                    load(&b,d);
                     break;
                 case (0x43): //LD B,E
-                    load(b,e);
+                    load(&b,e);
                     break;
                 case (0x44): //LD B,H
-                    load(b,h);
+                    load(&b,h);
                     break;
                 case (0x45): //LD B,L
-                    load(b,l);
+                    load(&b,l);
                     break;
                 case (0x46): //LD B,((HL)
-                    b = read_address(HL);
-                    cpu_cycles = 8;
-                    pc++;
+                    load_from_mem(&b,HL);
                     break;
-                case (0x47): //r1 = B , r2 = A
-                    load(b,a);
+                case (0x47): //LD B,A
+                    load(&b,a);
                     break;
-                case (0x48): //r1 = C , r2 = B
-                    load(c,b)
+                case (0x48): //LD C,B
+                    load(&c,b);
                     break;
-                case (0x49): //r1 = C , r2 = C
+                case (0x49): //LD C,C
                     // unnecesary to implement
                     cpu_cycles = 4;
                     pc++;
                     break;
-                case (0x4A): //r1 = C , r2 = D
-                    c = d;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x4A): //LD C,D
+                    load(&c,d);
                     break;
-                case (0x4B): //r1 = C , r2 = E
-                    c = e;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x4B): //LD C,E
+                    load(&c,e);
                     break;
-                case (0x4C): //r1 = C , r2 = H
-                    c = h;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x4C): //LD C,H
+                    load(&c,h);
                     break;
-                case (0x4D): //r1 = C , r2 = L
-                    c = l;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x4D): //LD C,L
+                    load(&c,l);
                     break;
-                case (0x4E): //r1 = C , r2 = HL
-                    c = read_address(HL);
-                    cpu_cycles = 8;
-                    pc++;
+                case (0x4E): //LD C,(HL)
+                    load_from_mem(&c,HL);
                     break;
-                case (0x4F): //r1 = C , r2 = A
-                    c = a;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x4F): //LD C,A
+                    load(&c,a);
                     break;
-                case (0x50): //r1 = D , r2 = B
-                    d = b;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x50): //LD D,B
+                    load(&d,b);
                     break;
-                case (0x51): //r1 = D , r2 = C
-                    d = c;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x51): //LD D,B
+                    load(&d,c);
                     break;
-                case (0x52): //r1 = D , r2 = D
+                case (0x52): //LD D,D
                     //no need to implement
                     cpu_cycles = 4;
                     pc++;
                     break;
-                case (0x53): //r1 = D , r2 = E
-                    d = e;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x53): //LD D,E
+                    load(&d,e);
                     break;
-                case (0x54): //r1 = D , r2 = H
-                    d = h;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x54): //LD D,H
+                    load(&d,h);
                     break;
-                case (0x55): //r1 = D , r2 = L
-                    d = l;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x55): //LD D,L
+                    load(&d,l);
                     break;
-                case (0x56): //r1 = D , r2 = HL
-                    d = read_address(HL);
-                    cpu_cycles = 8;
-                    pc++;
+                case (0x56): //LD D,(HL)
+                    load_from_mem(&d,HL);
                     break;
-                case (0x57): //r1 = D , r2 = A
-                    d = a;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x57): //LD D,A
+                    load(&d,a);
                     break;
-                case (0x58): //r1 = E , r2 = B
-                    e = b;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x58): //LD E,B
+                    load(&e,b);
                     break;
-                case (0x59): //r1 = E , r2 = C
-                    e = c;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x59): //LD E,C
+                    load(&e,c);
                     break;
-                case (0x5A): //r1 = E , r2 = D
-                    e = d;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x5A): //LD E,D
+                    load(&e,d);
                     break;
-                case (0x5B): //r1 = E , r2 = E
+                case (0x5B): //LD E,E
                     //no need to implement lel
                     cpu_cycles = 4;
                     pc++;
                     break;
-                case (0x5C): //r1 = E , r2 = H
-                    e = h;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x5C): //LD E,H
+                    load(&e,h);
                     break;
-                case (0x5D): //r1 = E , r2 = L
-                    e = l;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x5D): //LD E,L
+                    load(&e,l);
                     break;
-                case (0x5E): //r1 = E , r2 = HL
-                    e = read_address(HL);
-                    cpu_cycles = 8;
-                    pc++;
+                case (0x5E): //LD E,(HL)
+                    load_from_mem(&e,HL);
                     break;
-                case (0x5F): //r1 = E , r2 = A
-                    e = a;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x5F): //LD E,A
+                    load(&e,a);
                     break;
-                case (0x60): //r1 = H , r2 = B
-                    h = b;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x60): //ld H,L
+                    load(&h,b);
                     break;
-                case (0x61): //r1 = H , r2 = C
-                    h = c;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x61): //ld H,C
+                    load(&h,c);
                     break;
-                case (0x62): //r1 = H , r2 = D
-                    h = d;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x62): //ld H,D
+                    load(&h,d);
                     break;
-                case (0x63): //r1 = H , r2 = E
-                    h = e;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x63): //ld H,E
+                    load(&h,e);
                     break;
-                case (0x64): //r1 = H , r2 = H
+                case (0x64): //ld H,H
                     //no need to implement
                     cpu_cycles = 4;
                     pc++;
                     break;
-                case (0x65): //r1 = H , r2 = L
-                    h = l;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x65): //ld H,L
+                    load(&h,l);
                     break;
-                case (0x66): //r1 = H , r2 = HL
-                    h = read_address(HL);
-                    cpu_cycles = 8;
-                    pc++;
+                case (0x66): // ld H,(HL)
+                    load_from_mem(&h,HL);
                     break;
-                case (0x67): //r1 = H , r2 = A
-                    h = a;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x67): //ld H,A
+                    load(&h,a);
                     break;
-                case (0x68): //r1 = L , r2 = B
-                    l = b;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x68): //ld L,B
+                    load(&l,b);
                     break;
-                case (0x69): //r1 = L , r2 = C
-                    l = c;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x69): //ld L,C
+                    load(&l,c);
                     break;
-                case (0x6A): //r1 = L , r2 = D
-                    l = d;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x6A): //ld L,D
+                    load(&l,d);
                     break;
-                case (0x6B): //r1 = L , r2 = E
-                    l = e;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x6B): //ld L,E
+                    load(&l,e);
                     break;
-                case (0x6C): //r1 = L , r2 = H
-                    l = h;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x6C): //ld l,H
+                    load(&l,h);
                     break;
-                case (0x6D): //r1 = L , r2 = L
+                case (0x6D): //ld L,L
                     //unnecesary to implement
                     cpu_cycles = 4;
                     pc++;
                     break;
-                case (0x6E): //r1 = L , r2 = HL
-                    l = read_address(HL);
-                    cpu_cycles = 8;
-                    pc++;
+                case (0x6E): //ld L,(HL)
+                    load_from_mem(&l,HL);
                     break;
-                case (0x6F): //r1 = L , r2 = A
-                    l = a;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x6F): //ld L,A
+                    load(&l,a);
                     break;
-                case (0x70): //r1 = HL , r2 = B
-                    l = b;
-                    cpu_cycles = 8;
-                    pc++;
+                case (0x70): //1d(HL),B
+                    load_to_mem(HL,b);
                     break;
-                case (0x71): //r1 = A , r2 = C
-                    l = c;
-                    cpu_cycles = 8;
-                    pc++;
+                case (0x71): //1d(HL),C
+                    load_to_mem(HL,c);
                     break;
-                case (0x72): //r1 = HL , r2 = D
-                    l = d;
-                    cpu_cycles = 8;
-                    pc++;
+                case (0x72): //1d(HL),D
+                    load_to_mem(HL,d);
                     break;
-                case (0x73): //r1 = HL , r2 = E
-                    l = e;
-                    cpu_cycles = 8;
-                    pc++;
+                case (0x73): //1d(HL),E
+                    load_to_mem(HL,e);
                     break;
-                case (0x74): //r1 = (HL) , r2 = H
-                    l = h;
-                    cpu_cycles = 8;
-                    pc++;
+                case (0x74): //1d(HL),H
+                    load_to_mem(HL,h);
                     break;
-                case (0x75): //r1 = HL , r2 = L
-
-                    cpu_cycles = 8;
-                    pc++;
+                case (0x75): //1d(HL),L
+                    load_to_mem(HL,l);
                     break;
                 case (0x76): //HALT
-                    //wait for an idea to implement lol
-                    pc++;
+                    halt();
                     break;
-                case (0x77): //r1 = HL , r2 = A
-                    l = a;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x77): //1d(HL),A
+                    load_to_mem(HL,a);
                     break;
-                case (0x78): //r1 = A , r2 = B
-                    load(a,b);
+                case (0x78): //ld A,B
+                    load(&a,b);
                     break;
-                case (0x79): //r1 = A , r2 = C
-                    load(a,c);
+                case (0x79): //ld A,C
+                    load(&a,c);
                     break;
-                case (0x7A): //r1 = A , r2 = D
-                    load(a,d);
+                case (0x7A): //ld A,D
+                    load(&a,d);
                     break;
-                case (0x7B): //r1 = A , r2 = E
-                    load(a,e);
+                case (0x7B): //ld A,E
+                    load(&a,e);
                     break;
-                case (0x7C): //r1 = A , r2 = H
-                    load(a,h);
+                case (0x7C): //ld A,H
+                    load(&a,h);
                     break;
-                case (0x7D): //r1 = A , r2 = L
-                    load(a,l);
+                case (0x7D): //ld A,L
+                    load(&a,l);
                     break;
-                case (0x7E): //r1 = A , r2 = HL
-                    a = read_address(HL);
-                    cpu_cycles = 8;
-                    pc++;
+                case (0x7E): //ld A,(HL)
+                    load_from_mem(&a,HL);
                     break;
-                case (0x7F): //r1 = A , r2 = A
+                case (0x7F): //ld A,A
                     //unnecesary to execute
                     cpu_cycles = 4;
                     pc++;
@@ -447,19 +332,45 @@ void interpret(uint8_t dissassembly){
     }
 }
 
-void load(uint8_t a, uint8_t b){
+void load(uint8_t *a, uint8_t b){
 
-    a = b;
+    *a = b;
     cpu_cycles = 4;
     pc++;
 
 }
 void load_to_mem(uint16_t address, uint8_t data){
     write_address(data, address);
-
-
+    cpu_cycles = 8;
+    pc++;
 }
-void load_from_mem(uint8_t* reg, uint16_t address){
+void load_from_mem(uint8_t *reg, uint16_t address){
+    *reg = read_address(address);
+    cpu_cycles = 8;
+    pc++;
+}
+void halt(){
 
-
+    //TODO: implement halt
+    pc++;
+}
+void nop(){
+    pc++;
+    cpu_cycles = 4;
+}
+void load_2B(uint8_t *reg1, uint8_t *reg2){
+    *reg1 = read_address(pc+1);
+    *reg2 = read_address(pc+2);
+    cpu_cycles = 12;
+    pc+=3;
+}
+void load_1B(uint8_t *reg){
+    *reg = read_address(pc+1);
+    pc+=2;
+    cpu_cycles+=2;
+}
+void load_1B(uint16_t address){
+    write_address(read_address(pc+1), address);
+    pc+=2;
+    cpu_cycles+=2;
 }
