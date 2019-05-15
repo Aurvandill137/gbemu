@@ -135,53 +135,36 @@ void interpret(uint8_t dissassembly){
                     cpu_cycles = 4;
                     pc++;
                     break;
-
-                //ld r1, r2   put value r2 into r1
-
-                case (0x40): //r1 = B , r2 = B
+                case (0x40): //LD B,B
                     //not necessary to implement
                     cpu_cycles = 4;
                     pc++;
                     break;
-                case (0x41): //r1 = B , r2 = C
-                    b = c;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x41): //LD B,C
+                    load(b,c);
                     break;
-                case (0x42): //r1 = B , r2 = D
-                    b = d;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x42): //LD B,D
+                    load(b,d);
                     break;
-                case (0x43): //r1 = B , r2 = E
-                    b = e;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x43): //LD B,E
+                    load(b,e);
                     break;
-                case (0x44): //r1 = B , r2 = H
-                    b = h;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x44): //LD B,H
+                    load(b,h);
                     break;
-                case (0x45): //r1 = B , r2 = L
-                    b = l;
-                    cpu_cycles = 4;
-                    pc++;
+                case (0x45): //LD B,L
+                    load(b,l);
                     break;
-                case (0x46): //r1 = B , r2 = HL
+                case (0x46): //LD B,((HL)
                     b = read_address(HL);
                     cpu_cycles = 8;
                     pc++;
                     break;
                 case (0x47): //r1 = B , r2 = A
-                    b = a;
-                    cpu_cycles = 4;
-                    pc++;
+                    load(b,a);
                     break;
                 case (0x48): //r1 = C , r2 = B
-                    c = b;
-                    cpu_cycles = 4;
-                    pc++;
+                    load(c,b)
                     break;
                 case (0x49): //r1 = C , r2 = C
                     // unnecesary to implement
@@ -398,13 +381,13 @@ void interpret(uint8_t dissassembly){
                     cpu_cycles = 8;
                     pc++;
                     break;
-                case (0x74): //r1 = HL , r2 = H
+                case (0x74): //r1 = (HL) , r2 = H
                     l = h;
                     cpu_cycles = 8;
                     pc++;
                     break;
                 case (0x75): //r1 = HL , r2 = L
-                    //no need to implement since l = l isnt needed to be implemented
+
                     cpu_cycles = 8;
                     pc++;
                     break;
@@ -418,34 +401,22 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x78): //r1 = A , r2 = B
-                    a = b;
-                    cpu_cycles = 4;
-                    pc++;
+                    load(a,b);
                     break;
                 case (0x79): //r1 = A , r2 = C
-                    a = c;
-                    cpu_cycles = 4;
-                    pc++;
+                    load(a,c);
                     break;
                 case (0x7A): //r1 = A , r2 = D
-                    a = d;
-                    cpu_cycles = 4;
-                    pc++;
+                    load(a,d);
                     break;
                 case (0x7B): //r1 = A , r2 = E
-                    a = e;
-                    cpu_cycles = 4;
-                    pc++;
+                    load(a,e);
                     break;
                 case (0x7C): //r1 = A , r2 = H
-                    a = h;
-                    cpu_cycles = 4;
-                    pc++;
+                    load(a,h);
                     break;
                 case (0x7D): //r1 = A , r2 = L
-                    a = l;
-                    cpu_cycles = 4;
-                    pc++;
+                    load(a,l);
                     break;
                 case (0x7E): //r1 = A , r2 = HL
                     a = read_address(HL);
@@ -474,4 +445,21 @@ void interpret(uint8_t dissassembly){
 
         }
     }
+}
+
+void load(uint8_t a, uint8_t b){
+
+    a = b;
+    cpu_cycles = 4;
+    pc++;
+
+}
+void load_to_mem(uint16_t address, uint8_t data){
+    write_address(data, address);
+
+
+}
+void load_from_mem(uint8_t* reg, uint16_t address){
+
+
 }
