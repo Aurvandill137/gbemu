@@ -27,5 +27,6 @@ void decrement(uint16_t address);
 //bit Logic Operations
 
 void rlc(uint8_t *var);
+void rlca(); //basicaly rlc on register A with half the cpu cykles
 
 #endif //UNTITLED1_CPU_H

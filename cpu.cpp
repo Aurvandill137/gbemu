@@ -71,7 +71,7 @@ void interpret(uint8_t dissassembly){
                     load_1B(&b);
                     break;
                 case (0x07): // RLCA
-                    rlc(&a);
+                    rlca();
                     break;
                 case (0x08): //
 
@@ -83,12 +83,6 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x0B): //
-
-                    break;
-                case (0x0C): //
-
-                    break;
-                case (0x0D): //
 
                     break;
                 case (0x0C): //
@@ -879,12 +873,6 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x0B): //
-
-                    break;
-                case (0x0C): //
-
-                    break;
-                case (0x0D): //
 
                     break;
                 case (0x0C): //
@@ -1756,9 +1744,28 @@ void rlc(uint8_t *var){
     uint8_t tmp = *var;
     *var = (*var<<1) | (tmp & 0b10000000)>>7;
     pc++;
-    cpu_cycles = 4;
+    cpu_cycles = 8;
+    //reset all flags
+    flags = 0;
     //set carry flag or unset it
     if((*var & 1) != 0){
+        flags |= (1<<CARRYFLAG);
+    } else {
+        flags &= ~(1<<CARRYFLAG);
+    }
+    if(*var != 0){
+        flags |= (1<<ZEROFLAG);
+    }
+}
+void rlca(){
+    uint8_t tmp = a;
+    a = (a<<1) | (tmp & 0b10000000)>>7;
+    pc++;
+    cpu_cycles = 4;
+    //reset all flags
+    flags = 0;
+    //set carry flag or unset it
+    if((a & 1) != 0){
         flags |= (1<<CARRYFLAG);
     } else {
         flags &= ~(1<<CARRYFLAG);
