@@ -1139,7 +1139,7 @@ void interpret(uint8_t dissassembly){
                 case (0x63): //
 
                     break;
-                case (0x64): //l
+                case (0x64): //
 
                     break;
                 case (0x65): //
