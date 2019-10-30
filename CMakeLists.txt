@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
-project(untitled1)
+project(gb_emu)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(untitled1 main.cpp cpu.cpp cpu.h mmu.cpp mmu.h)
+add_executable(gb_emu main.cpp cpu.cpp cpu.h mmu.cpp mmu.h)
