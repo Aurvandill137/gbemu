@@ -1,5 +1,6 @@
 # gbemu
 a wip gb emu that someday will hopefully run on an stm32
+currently im still trying to understand every opcode
 
 # usefull resources
 
