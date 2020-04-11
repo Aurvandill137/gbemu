@@ -1028,388 +1028,388 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x40): //BIT 0,B
-
+                    bit(0,&b);
                     break;
                 case (0x41): //BIT 0,C
-
+                    bit(0,&c);
                     break;
                 case (0x42): //BIT 0,D
-
+                    bit(0,&d);
                     break;
-                case (0x43): //BIT 0,D
-
+                case (0x43): //BIT 0,E
+                    bit(0,&e);
                     break;
-                case (0x44): //BIT 0,E
-
+                case (0x44): //BIT 0,H
+                    bit(0,&h);
                     break;
-                case (0x45): //BIT 0,H
-
+                case (0x45): //BIT 0,L
+                    bit(0,&l);
                     break;
-                case (0x46): //BIT 0,L
-
+                case (0x46): //BIT 0,(HL)
+                    bit(0,HL);
                     break;
-                case (0x47): //BIT 0,(HL)
-
+                case (0x47): //BIT 0,A
+                    bit(0,&a);
                     break;
                 case (0x48): //BIT 0,B
-
+                    bit(1,&b);
                     break;
                 case (0x49): //BIT 1,C
-
+                    bit(1,&c);
                     break;
                 case (0x4A): //BIT 1,D
-
+                    bit(1,&d);
                     break;
                 case (0x4B): //BIT 1,E
-
+                    bit(1,&e);
                     break;
                 case (0x4C): //BIT 1,H
-
+                    bit(1,&h);
                     break;
                 case (0x4D): //BIT 1,L
-
+                    bit(1,&l);
                     break;
                 case (0x4E): //BIT 1,(HL)
-
+                    bit(1,HL);
                     break;
                 case (0x4F): //BIT 1,A
-
+                    bit(1,&a);
                     break;
                 case (0x50): //BIT 2,B
-
+                    bit(2,&b);
                     break;
                 case (0x51): //BIT 2,C
-
+                    bit(2,&c);
                     break;
                 case (0x52): //BIT 2,D
-
+                    bit(2,&d);
                     break;
                 case (0x53): //BIT 2,E
-
+                    bit(2,&e);
                     break;
                 case (0x54): //BIT 2,H
-
+                    bit(2,&h);
                     break;
                 case (0x55): //BIT 2,L
-
+                    bit(2,&l);
                     break;
                 case (0x56): //BIT 2,(HL)
-
+                    bit(2,HL);
                     break;
                 case (0x57): //BIT 2,A
-
+                    bit(2,&a);
                     break;
                 case (0x58): //BIT 3,B
-
+                    bit(3,&b);
                     break;
                 case (0x59): //BIT 3,C
-
+                    bit(3,&c);
                     break;
                 case (0x5A): //BIT 3,D
-
+                    bit(3,&d);
                     break;
                 case (0x5B): //BIT 3,E
-
+                    bit(3,&e);
                     break;
                 case (0x5C): //BIT 3,H
-
+                    bit(3,&h);
                     break;
                 case (0x5D): //BIT 3,L
-
+                    bit(3,&l);
                     break;
                 case (0x5E): //BIT 3,(HL)
-
+                    bit(3,HL);
                     break;
                 case (0x5F): //BIT 3,A
-
+                    bit(3,&a);
                     break;
                 case (0x60): //BIT 4,B
-
+                    bit(4,&b);
                     break;
                 case (0x61): //BIT 4,C
-
+                    bit(4,&c);
                     break;
                 case (0x62): //BIT 4,D
-
+                    bit(4,&d);
                     break;
                 case (0x63): //BIT 4,E
-
+                    bit(4,&e);
                     break;
                 case (0x64): //BIT 4,H
-
+                    bit(4,&h);
                     break;
                 case (0x65): //BIT 4,L
-
+                    bit(4,&l);
                     break;
                 case (0x66): //BIT 4,(HL)
-
+                    bit(4,HL);
                     break;
                 case (0x67): //BIT 4,A
-
+                    bit(4,&a);
                     break;
                 case (0x68): //BIT 5,B
-
+                    bit(5,&b);
                     break;
                 case (0x69): //BIT 5,C
-
+                    bit(5,&c);
                     break;
                 case (0x6A): //BIT 5,D
-
+                    bit(5,&d);
                     break;
                 case (0x6B): //BIT 5,E
-
+                    bit(5,&e);
                     break;
                 case (0x6C): //BIT 5,H
-
+                    bit(5,&h);
                     break;
                 case (0x6D): //BIT 5,L
-
+                    bit(5,&l);
                     break;
                 case (0x6E): //BIT 5,(HL)
-
+                    bit(5,HL);
                     break;
                 case (0x6F): //BIT 5,A
-
+                    bit(5,&a);
                     break;
                 case (0x70): //BIT 6,B
-
+                    bit(6,&b);
                     break;
                 case (0x71): //BIT 6,C
-
+                    bit(6,&c);
                     break;
                 case (0x72): //BIT 6,D
-
+                    bit(6,&d);
                     break;
                 case (0x73): //BIT 6,E
-
+                    bit(6,&e);
                     break;
                 case (0x74): //BIT 6,H
-
+                    bit(6,&h);
                     break;
                 case (0x75): //BIT 6,L
-
+                    bit(6,&l);
                     break;
                 case (0x76): //BIT 6,(HL)
-
+                    bit(6,HL);
                     break;
                 case (0x77): //BIT 6,A
-
+                    bit(6,&a);
                     break;
                 case (0x78): //BIT 7,B
-
+                    bit(7,&b);
                     break;
                 case (0x79): //BIT 7,C
-
+                    bit(7,&c);
                     break;
                 case (0x7A): //BIT 7,D
-
+                    bit(7,&d);
                     break;
                 case (0x7B): //BIT 7,E
-
+                    bit(7,&e);
                     break;
                 case (0x7C): //BIT 7,H
-
+                    bit(7,&h);
                     break;
                 case (0x7D): //BIT 7,L
-
+                    bit(7,&l);
                     break;
                 case (0x7E): //BIT 7,(HL)
-
+                    bit(7,HL);
                     break;
                 case (0x7F): //BIT 7,A
-
+                    bit(7,&a);
                     break;
                 case (0x80): //RES 0,B
-
+                    res(0,&b);
                     break;
                 case (0x81): //RES 0,C
-
+                    res(0,&c);
                     break;
                 case (0x82): //RES 0,D
-
+                    res(0,&d);
                     break;
                 case (0x83): //RES 0,E
-
+                    res(0,&e);
                     break;
                 case (0x84): //RES 0,H
-
+                    res(0,&h);
                     break;
                 case (0x85): //RES 0,L
-
+                    res(0,&l);
                     break;
                 case (0x86): //RES 0,(HL)
-
+                    res(0,HL);
                     break;
                 case (0x87): //RES 0,A
-
+                    res(0,&a);
                     break;
                 case (0x88): //RES 1,B
-
+                    res(1,&b);
                     break;
                 case (0x89): //RES 1,C
-
+                    res(1,&c);
                     break;
                 case (0x8A): //RES 1,D
-
+                    res(1,&d);
                     break;
                 case (0x8B): //RES 1,E
-
+                    res(1,&e);
                     break;
                 case (0x8C): //RES 1,H
-
+                    res(1,&h);
                     break;
                 case (0x8D): //RES 1,L
-
+                    res(1,&l);
                     break;
                 case (0x8E): //RES 1,(HL)
-
+                    res(1,HL);
                     break;
                 case (0x8F): //RES 1,A
-
+                    res(1,&a);
                     break;
                 case (0x90): //RES 2,B
-
+                    res(2,&b);
                     break;
                 case (0x91): //RES 2,C
-
+                    res(2,&c);
                     break;
                 case (0x92): //RES 2,D
-
+                    res(2,&d);
                     break;
                 case (0x93): //RES 2,E
-
+                    res(2,&e);
                     break;
                 case (0x94): //RES 2,H
-
+                    res(2,&h);
                     break;
                 case (0x95): //RES 2,L
-
+                    res(2,&l);
                     break;
                 case (0x96): //RES 2,(HL)
-
+                    res(2,HL);
                     break;
                 case (0x97): //RES 2,A
-
+                    res(2,&a);
                     break;
                 case (0x98): //RES 3,B
-
+                    res(3,&b);
                     break;
                 case (0x99): //RES 3,C
-
+                    res(3,&c);
                     break;
                 case (0x9A): //RES 3,D
-
+                    res(3,&d);
                     break;
                 case (0x9B): //RES 3,E
-
+                    res(3,&e);
                     break;
                 case (0x9C): //RES 3,H
-
+                    res(3,&h);
                     break;
                 case (0x9D): //RES 3,L
-
+                    res(3,&l);
                     break;
                 case (0x9E): //RES 3,(HL)
-
+                    res(3,HL);
                     break;
                 case (0x9F): //RES 3,A
-
+                    res(3,&a);
                     break;
                 case (0xA0): //RES 4,B
-
+                    res(4,&b);
                     break;
                 case (0xA1): //RES 4,C
-
+                    res(4,&c);
                     break;
                 case (0xA2): //RES 4,D
-
+                    res(4,&d);
                     break;
                 case (0xA3): //RES 4,E
-
+                    res(4,&e);
                     break;
                 case (0xA4): //RES 4,H
-
+                    res(4,&h);
                     break;
                 case (0xA5): //RES 4,L
-
+                    res(4,&l);
                     break;
                 case (0xA6): //RES 4,(HL)
-
+                    res(4,HL);
                     break;
                 case (0xA7): //RES 4,A
-
+                    res(4,&a);
                     break;
                 case (0xA8): //RES 5,B
-
+                    res(5,&b);
                     break;
                 case (0xA9): //RES 5,C
-
+                    res(5,&c);
                     break;
                 case (0xAA): //RES 5,D
-
+                    res(5,&d);
                     break;
                 case (0xAB): //RES 5,E
-
+                    res(5,&e);
                     break;
                 case (0xAC): //RES 5,H
-
+                    res(5,&h);
                     break;
                 case (0xAD): //RES 5,L
-
+                    res(5,&l);
                     break;
                 case (0xAE): //RES 5,(HL)
-
+                    res(5,HL);
                     break;
                 case (0xAF): //RES 5,A
-
+                    res(5,&a);
                     break;
                 case (0xB0): //RES 6,B
-
+                    res(6,&b);
                     break;
                 case (0xB1): //RES 6,C
-
+                    res(6,&c);
                     break;
                 case (0xB2): //RES 6,D
-
+                    res(6,&d);
                     break;
                 case (0xB3): //RES 6,E
-
+                    res(6,&e);
                     break;
                 case (0xB4): //RES 6,H
-
+                    res(6,&h);
                     break;
                 case (0xB5): //RES 6,L
-
+                    res(6,&l);
                     break;
                 case (0xB6): //RES 6,(HL)
-
+                    res(6,HL);
                     break;
                 case (0xB7): //RES 6,A
-
+                    res(6,&a);
                     break;
                 case (0xB8): //RES 7,B
-
+                    res(7,&b);
                     break;
                 case (0xB9): //RES 7,C
-
+                    res(7,&c);
                     break;
                 case (0xBA): //RES 7,D
-
+                    res(7,&d);
                     break;
                 case (0xBB): //RES 7,E
-
+                    res(7,&e);
                     break;
                 case (0xBC): //RES 7,H
-
+                    res(7,&h);
                     break;
                 case (0xBD): //RES 7,L
-
+                    res(7,&l);
                     break;
                 case (0xBE): //RES 7,(HL)
-
+                    res(7,HL);
                     break;
                 case (0xBF): //RES 7,A
-
+                    res(7,&a);
                     break;
                 case (0xC0): //SET 0,B
                     set(0,&b);

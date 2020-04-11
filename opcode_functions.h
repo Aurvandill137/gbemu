@@ -29,7 +29,11 @@ void swap(uint8_t *var);
 void swap(uint16_t address);
 void rlc(uint8_t *var);
 void rlca(); //basicaly rlc on register A with half the cpu cykles
+void res(uint8_t bit, uint8_t *reg);
+void res(uint8_t bit, uint16_t address);
 void set(uint8_t bit, uint8_t *reg);
 void set(uint8_t bit, uint16_t address);
+void bit(uint8_t bittest, uint8_t *var);
+void bit(uint8_t bittest, uint16_t address);
 
 #endif //GBEMU_OPCODE_FUNCTIONS_H

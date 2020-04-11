@@ -155,6 +155,7 @@ void swap(uint8_t *var){
     }else {
         clear_flag(ZEROFLAG);
     }
+    pc++;
 }
 void swap(uint16_t address){
     uint8_t x = read_address(address);
@@ -170,24 +171,51 @@ void swap(uint16_t address){
     }else {
         clear_flag(ZEROFLAG);
     }
+    pc++;
 }
-
+void res(uint8_t bit, uint8_t *reg){
+    *reg &= ~(1<<bit);
+    cpu_cycles+=8;
+    pc++;
+}
+void res(uint8_t bit, uint16_t address){
+    uint8_t x = read_address(address);
+    res(bit, &x);
+    write_address(x,address);
+    cpu_cycles+=8;
+}
 void set(uint8_t bit, uint8_t *reg){
     *reg |= (1<<bit);
     cpu_cycles+=8;
+    pc++;
 }
 void set(uint8_t bit, uint16_t address){
     uint8_t x = read_address(address);
-    x |= (1<<bit);
+    set(bit, &x);
     write_address(x,address);
-    cpu_cycles+=16;
+    cpu_cycles+=8;
 }
-
+void bit(uint8_t bittest, uint8_t *var){
+    cpu_cycles+=8;
+    pc++;
+    clear_flag(SUBTRACTFLAG);
+    set_flag(HALFCARRYFLAG);
+    if ((*var&(1<<bittest))==0){
+        set_flag(ZEROFLAG);
+    } else{
+        clear_flag(ZEROFLAG);
+    }
+}
+void bit(uint8_t bittest, uint16_t address){
+    cpu_cycles+=8;
+    uint8_t x = read_address(address);
+    bit(bittest,&x);
+}
 void rlc(uint8_t *var){
     uint8_t tmp = *var;
     *var = (*var<<1) | (tmp & 0b10000000)>>7;
     pc++;
-    cpu_cycles = 8;
+    cpu_cycles = 2;
     //reset all flags
     flags = 0;
     //set carry flag or unset it
@@ -197,8 +225,19 @@ void rlc(uint8_t *var){
         clear_flag(CARRYFLAG);
     }
     if(*var != 0){
+        clear_flag(ZEROFLAG);
+    } else {
         set_flag(ZEROFLAG);
     }
+    clear_flag(HALFCARRYFLAG);
+    clear_flag(SUBTRACTFLAG);
+    pc++;
+}
+void rlc(uint16_t address){
+    uint8_t x = read_address(address);
+    rlc(&x);
+    write_address(x,address);
+    cpu_cycles+=2;
 }
 void rlca(){
     uint8_t tmp = a;
@@ -213,6 +252,10 @@ void rlca(){
     } else {
        clear_flag(CARRYFLAG);
     }
+    clear_flag(ZEROFLAG);
+    clear_flag(HALFCARRYFLAG);
+    clear_flag(SUBTRACTFLAG);
+    pc++;
 }
 //helpers
 void set_flag(uint8_t flag){
