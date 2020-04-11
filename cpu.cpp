@@ -89,151 +89,151 @@ void interpret(uint8_t dissassembly){
                 case (0x0E): //LD C,n
 
                     break;
-                case (0x0F): //
+                case (0x0F): //RRCA
 
                     break;
-                case (0x10): //
+                case (0x10): //STOP
 
                     break;
-                case (0x11): //
+                case (0x11): //LD DE,d16
 
                     break;
-                case (0x12): //
+                case (0x12): //LD (DE),A
 
                     break;
-                case (0x13): //
+                case (0x13): //INC DE
 
                     break;
-                case (0x14): //
+                case (0x14): //INC D
 
                     break;
-                case (0x15): //
+                case (0x15): //DEC D
 
                     break;
-                case (0x16): //
+                case (0x16): //LD D,d8
 
                     break;
-                case (0x17): //
+                case (0x17): //RLA
 
                     break;
-                case (0x18): //
+                case (0x18): //JR r8
 
                     break;
-                case (0x19): //
+                case (0x19): //ADD HL,DE
 
                     break;
-                case (0x1A): //
+                case (0x1A): //LD A,(DE)
 
                     break;
-                case (0x1B): //
+                case (0x1B): //DEC DE
 
                     break;
-                case (0x1C): //
+                case (0x1C): //INC E
 
                     break;
-                case (0x1D): //
+                case (0x1D): //DEC E
 
                     break;
-                case (0x1E): //
+                case (0x1E): //LD E,d8
 
                     break;
-                case (0x1F): //
+                case (0x1F): //RRA
 
                     break;
-                case (0x20): //
+                case (0x20): //JR NZ,r8
 
                     break;
-                case (0x21): //
+                case (0x21): //LD HL,d16
 
                     break;
-                case (0x22): //
+                case (0x22): //LD (HL+),A
 
                     break;
-                case (0x23): //
+                case (0x23): //INC HL
 
                     break;
-                case (0x24): //
+                case (0x24): //INC H
 
                     break;
-                case (0x25): //
+                case (0x25): //DEC H
 
                     break;
-                case (0x26): //
+                case (0x26): //LD H,d8
 
                     break;
-                case (0x27): //
+                case (0x27): //DAA
 
                     break;
-                case (0x28): //
+                case (0x28): //JR Z,r8
 
                     break;
-                case (0x29): //
+                case (0x29): //ADD HL,HL
 
                     break;
-                case (0x2A): //
+                case (0x2A): //LD A,(HL+)
 
                     break;
-                case (0x2B): //
+                case (0x2B): //DEC HL
 
                     break;
-                case (0x2C): //
+                case (0x2C): //INC L
 
                     break;
-                case (0x2D): //
+                case (0x2D): //DEC L
 
                     break;
-                case (0x2E): //
+                case (0x2E): //LD L,d8
 
                     break;
-                case (0x2F): //
+                case (0x2F): //CPL
 
                     break;
-                case (0x30): //
+                case (0x30): //JR NC,r8
 
                     break;
-                case (0x31): //
+                case (0x31): //LD SP,d16
 
                     break;
-                case (0x32): //
+                case (0x32): //LD (HL-),A
 
                     break;
-                case (0x33): //
+                case (0x33): //INC SP
 
                     break;
-                case (0x34): //
+                case (0x34): //INC (HL)
 
                     break;
-                case (0x35): //
+                case (0x35): //DEC (HL)
 
                     break;
-                case (0x36): //
+                case (0x36): //LD (HL),d8
 
                     break;
-                case (0x37): //
+                case (0x37): //SCF
 
                     break;
-                case (0x38): //
+                case (0x38): //JR C,r8
 
                     break;
-                case (0x39): //
+                case (0x39): //ADD HL,SP
 
                     break;
-                case (0x3A): //
+                case (0x3A): //LD A,(HL-)
 
                     break;
-                case (0x3B): //
+                case (0x3B): //DEC SP
 
                     break;
-                case (0x3C): //
+                case (0x3C): //INC A
 
                     break;
-                case (0x3D): //
+                case (0x3D): //DEC A
 
                     break;
-                case (0x3E): //
+                case (0x3E): //LD A,d8
 
                     break;
-                case (0x3F): //
+                case (0x3F): //CCF
 
                     break;
                 case (0x40): //LD B,B
