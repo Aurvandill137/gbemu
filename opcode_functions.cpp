@@ -1,5 +1,6 @@
 #include <iostream>
 #include "opcode_functions.h"
+#include "cartridge.h"
 #include "cpu.h"
 #include "mmu.h"
 
