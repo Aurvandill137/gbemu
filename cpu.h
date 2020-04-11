@@ -12,6 +12,7 @@
 #define HALFCARRYFLAG 5
 #define CARRYFLAG 4
 
-void interpret(unsigned short instrcution);
+void interpret(uint8_t dissassembly);
+
 
 #endif //GBEMU_CPU_H

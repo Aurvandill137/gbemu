@@ -67,16 +67,16 @@ void increment(uint8_t *var){
     flags &= ~(1<<SUBTRACTFLAG);
     //check if the halfcarryflag needs to be set
     if((*var&0x0F) != 0){
-        flags |= (1<<HALFCARRYFLAG);
+        set_flag(HALFCARRYFLAG);
     }else {
-        flags &= ~(1<<HALFCARRYFLAG);
+        clear_flag(HALFCARRYFLAG);
     }
     if(*var == 0xFF){
         *var=0;
         //set Zeroflag
-        flags |= (1<<ZEROFLAG);
+        set_flag(ZEROFLAG);
     }else {
-        flags &= ~(1<<ZEROFLAG);
+        clear_flag(ZEROFLAG);
         *var += 1;
     }
     cpu_cycles = 8;
@@ -85,12 +85,12 @@ void increment(uint8_t *var){
 }
 void decrement(uint8_t *var){
     //Reset subtract flag
-    flags &= ~(1<<SUBTRACTFLAG);
+    clear_flag(SUBTRACTFLAG);
     //check if the halfcarryflag needs to be set
     if((*var&0x0F) == 0){
-        flags |= (1<<HALFCARRYFLAG);
+        set_flag(HALFCARRYFLAG);
     }else {
-        flags &= ~(1<<HALFCARRYFLAG);
+        clear_flag(HALFCARRYFLAG);
     }
     if(*var == 0){
         *var=0xFF;
@@ -98,9 +98,9 @@ void decrement(uint8_t *var){
         *var-=1;
     }
     if(*var == 0){
-        flags |= (1<<ZEROFLAG);
+        set_flag(ZEROFLAG);
     } else {
-        flags &= ~(1<<ZEROFLAG);
+        clear_flag(ZEROFLAG);
     }
     cpu_cycles = 8;
     pc++;
@@ -143,6 +143,46 @@ void increment(uint16_t address){
     cpu_cycles+=4; //add 4 cycles to get 12 cycles
 }
 
+void swap(uint8_t *var){
+    uint8_t tmp = *var;
+    *var = (*var>>4) | (tmp<<4);
+    cpu_cycles+=8;
+    clear_flag(CARRYFLAG);
+    clear_flag(SUBTRACTFLAG);
+    clear_flag(HALFCARRYFLAG);
+    if(*var == 0){
+        set_flag(ZEROFLAG);
+    }else {
+        clear_flag(ZEROFLAG);
+    }
+}
+void swap(uint16_t address){
+    uint8_t x = read_address(address);
+    uint8_t tmp = x;
+    x = (x>>4) | (tmp<<4);
+    write_address(x,address);
+    cpu_cycles+=16;
+    clear_flag(CARRYFLAG);
+    clear_flag(SUBTRACTFLAG);
+    clear_flag(HALFCARRYFLAG);
+    if(x == 0){
+        set_flag(ZEROFLAG);
+    }else {
+        clear_flag(ZEROFLAG);
+    }
+}
+
+void set(uint8_t bit, uint8_t *reg){
+    *reg |= (1<<bit);
+    cpu_cycles+=8;
+}
+void set(uint8_t bit, uint16_t address){
+    uint8_t x = read_address(address);
+    x |= (1<<bit);
+    write_address(x,address);
+    cpu_cycles+=16;
+}
+
 void rlc(uint8_t *var){
     uint8_t tmp = *var;
     *var = (*var<<1) | (tmp & 0b10000000)>>7;
@@ -152,12 +192,12 @@ void rlc(uint8_t *var){
     flags = 0;
     //set carry flag or unset it
     if((*var & 1) != 0){
-        flags |= (1<<CARRYFLAG);
+        set_flag(CARRYFLAG);
     } else {
-        flags &= ~(1<<CARRYFLAG);
+        clear_flag(CARRYFLAG);
     }
     if(*var != 0){
-        flags |= (1<<ZEROFLAG);
+        set_flag(ZEROFLAG);
     }
 }
 void rlca(){
@@ -169,8 +209,15 @@ void rlca(){
     flags = 0;
     //set carry flag or unset it
     if((a & 1) != 0){
-        flags |= (1<<CARRYFLAG);
+        set_flag(CARRYFLAG);
     } else {
-        flags &= ~(1<<CARRYFLAG);
+       clear_flag(CARRYFLAG);
     }
+}
+//helpers
+void set_flag(uint8_t flag){
+    flags |= (1<<flag);
+}
+void clear_flag(uint8_t flag){
+     flags &= ~(1<<flag);
 }

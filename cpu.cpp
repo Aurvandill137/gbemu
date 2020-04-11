@@ -980,28 +980,28 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x30): //SWAP B
-
+                    swap(&b);
                     break;
                 case (0x31): //SWAP C
-
+                    swap(&c);
                     break;
                 case (0x32): //SWAP D
-
+                    swap(&d);
                     break;
                 case (0x33): //SWAP E
-
+                    swap(&e);
                     break;
                 case (0x34): //SWAP H
-
+                    swap(&h);
                     break;
                 case (0x35): //SWAP L
-
+                    swap(&l);
                     break;
                 case (0x36): //SWAP (HL)
-
+                    swap(HL);
                     break;
                 case (0x37): //SWAP A
-
+                    swap(&a);
                     break;
                 case (0x38): //SRL B
 
@@ -1412,196 +1412,196 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0xC0): //SET 0,B
-
+                    set(0,&b);
                     break;
                 case (0xC1): //SET 0,C
-
+                    set(0,&c);
                     break;
                 case (0xC2): //SET 0,D
-
+                    set(0,&d);
                     break;
                 case (0xC3): //SET 0,E
-
+                    set(0,&e);
                     break;
                 case (0xC4): //SET 0,H
-
+                    set(0,&h);
                     break;
                 case (0xC5): //SET 0,L
-
+                    set(0,&l);
                     break;
                 case (0xC6): //SET 0,(HL)
-
+                    set(0,HL);
                     break;
                 case (0xC7): //SET 0,A
-
+                    set(0,&a);
                     break;
                 case (0xC8): //SET 1,B
-
+                    set(1,&b);
                     break;
                 case (0xC9): //SET 1,C
-
+                    set(1,&c);
                     break;
                 case (0xCA): //SET 1,D
-
+                    set(1,&d);
                     break;
                 case (0xCB): //SET 1,E
-
+                    set(1,&e);
                     break;
                 case (0xCC): //SET 1,H
-
+                    set(1,&h);
                     break;
                 case (0xCD): //SET 1,L
-
+                    set(1,&l);
                     break;
                 case (0xCE): //SET 1,(HL)
-
+                    set(1,HL);
                     break;
                 case (0xCF): //SET 1,A
-
+                    set(1,&a);
                     break;
                 case (0xD0): //SET 2,B
-
+                    set(2,&b);
                     break;
                 case (0xD1): //SET 2,C
-
+                    set(2,&c);
                     break;
                 case (0xD2): //SET 2,D
-
+                    set(2,&d);
                     break;
                 case (0xD3): //SET 2,E
-
+                    set(2,&e);
                     break;
                 case (0xD4): //SET 2,H
-
+                    set(2,&h);
                     break;
                 case (0xD5): //SET 2,L
-
+                    set(2,&l);
                     break;
                 case (0xD6): //SET 2,(HL)
-
+                    set(2,HL);
                     break;
                 case (0xD7): //SET 2,A
-
+                    set(2,&a);
                     break;
                 case (0xD8): //SET 3,B
-
+                    set(3,&b);
                     break;
                 case (0xD9): //SET 3,C
-
+                    set(3,&c);
                     break;
                 case (0xDA): //SET 3,D
-
+                    set(3,&d);
                     break;
                 case (0xDB): //SET 3,E
-
+                    set(3,&e);
                     break;
                 case (0xDC): //SET 3,H
-
+                    set(3,&h);
                     break;
                 case (0xDD): //SET 3,L
-
+                    set(3,&l);
                     break;
                 case (0xDE): //SET 3,(HL)
-
+                    set(3,HL);
                     break;
                 case (0xDF): //SET 3,A
-
+                    set(3,&a);
                     break;
                 case (0xE0): //SET 4,B
-
+                    set(4,&b);
                     break;
                 case (0xE1): //SET 4,C
-
+                    set(4,&c);
                     break;
                 case (0xE2): //SET 4,D
-
+                    set(4,&d);
                     break;
                 case (0xE3): //SET 4,E
-
+                    set(4,&e);
                     break;
                 case (0xE4): //SET 4,H
-
+                    set(4,&h);
                     break;
                 case (0xE5): //SET 4,L
-
+                    set(4,&l);
                     break;
                 case (0xE6): //SET 4,(HL)
-
+                    set(4,HL);
                     break;
                 case (0xE7): //SET 4,A
-
+                    set(4,&a);
                     break;
                 case (0xE8): //SET 5,B
-
+                    set(5,&b);
                     break;
                 case (0xE9): //SET 5,C
-
+                    set(5,&c);
                     break;
                 case (0xEA): //SET 5,D
-
+                    set(5,&d);
                     break;
                 case (0xEB): //SET 5,E
-
+                    set(5,&e);
                     break;
                 case (0xEC): //SET 5,H
-
+                    set(5,&h);
                     break;
                 case (0xED): //SET 5,L
-
+                    set(5,&l);
                     break;
                 case (0xEE): //SET 5,(HL)
-
+                    set(5,HL);
                     break;
                 case (0xEF): //SET 5,A
-
+                    set(5,&a);
                     break;
                 case (0xF0): //SET 6,B
-
+                    set(6,&b);
                     break;
                 case (0xF1): //SET 6,C
-
+                    set(6,&c);
                     break;
                 case (0xF2): //SET 6,D
-
+                    set(6,&d);
                     break;
                 case (0xF3): //SET 6,E
-
+                    set(6,&e);
                     break;
                 case (0xF4): //SET 6,H
-
+                    set(6,&h);
                     break;
                 case (0xF5): //SET 6,L
-
+                    set(6,&l);
                     break;
                 case (0xF6): //SET 6,(HL)
-
+                    set(6,HL);
                     break;
                 case (0xF7): //SET 6,A
-
+                    set(6,&a);
                     break;
                 case (0xF8): //SET 7,B
-
+                    set(7,&b);
                     break;
                 case (0xF9): //SET 7,C
-
+                    set(7,&c);
                     break;
                 case (0xFA): //SET 7,D
-
+                    set(7,&d);
                     break;
                 case (0xFB): //SET 7,E
-
+                    set(7,&e);
                     break;
                 case (0xFC): //SET 7,H
-
+                    set(7,&h);
                     break;
                 case (0xFD): //SET 7,L
-
+                    set(7,&l);
                     break;
                 case (0xFE): //SET 7,(HL)
-
+                    set(7,HL);
                     break;
                 case (0xFF): //SET 7,A
-
+                    set(7,&a);
                     break;
 
                 default:
@@ -1612,4 +1612,3 @@ void interpret(uint8_t dissassembly){
         }
     }
 }
-

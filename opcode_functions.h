@@ -1,6 +1,11 @@
 #ifndef GBEMU_OPCODE_FUNCTIONS_H
 #define GBEMU_OPCODE_FUNCTIONS_H
 
+//helpers
+void set_flag(uint8_t flag);
+void clear_flag(uint8_t flag);
+
+//general
 void halt();
 void nop();
 //LD Functions
@@ -20,8 +25,11 @@ void increment(uint16_t address);
 void decrement(uint16_t address);
 
 //bit Logic Operations
-
+void swap(uint8_t *var);
+void swap(uint16_t address);
 void rlc(uint8_t *var);
 void rlca(); //basicaly rlc on register A with half the cpu cykles
+void set(uint8_t bit, uint8_t *reg);
+void set(uint8_t bit, uint16_t address);
 
 #endif //GBEMU_OPCODE_FUNCTIONS_H

@@ -10,3 +10,4 @@ currently im still trying to understand every opcode
 - [the cycle accurate game boy docs](https://github.com/AntonioND/giibiiadvance/blob/master/docs/TCAGBD.pdf)
 - [blargs gb test roms](https://github.com/retrio/gb-test-roms)
 - http://www.codeslinger.co.uk/pages/projects/gameboy/opcodes.html
+- https://rednex.github.io/rgbds/gbz80.7.html

@@ -15,7 +15,7 @@
 // 7,6,5,4,3,2,1,0
 //ROW1: Start,Select,B,A
 //ROW2: Down,Up,Left,Right
-//
+//note that 0 means pressed so we need to invert the register afterwards
 //7: -
 //6: -
 //5: ROW2
