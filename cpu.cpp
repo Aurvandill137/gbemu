@@ -49,10 +49,10 @@ void interpret(uint8_t dissassembly){
                     nop();
                     break;
                 case (0x01): // LD BC,d16
-                    load_2B(&b,&c);
+                    ld(&b,&c);
                     break;
                 case (0x02): // LD (BC),A
-                    load_to_mem(BC,a);
+                    ld(BC,a);
                     break;
                 case (0x03): // INC BC
                     increment(&b,&c);
@@ -64,7 +64,7 @@ void interpret(uint8_t dissassembly){
                     decrement(&b);
                     break;
                 case (0x06): // LD B,d8
-                    load_1B(&b);
+                    ld(&b);
                     break;
                 case (0x07): // RLCA
                     rlca();
@@ -76,7 +76,7 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x0A): //LD A,(BC)
-
+                    ld(&a,BC);
                     break;
                 case (0x0B): //DEC BC
 
@@ -87,8 +87,8 @@ void interpret(uint8_t dissassembly){
                 case (0x0D): //DEC C
 
                     break;
-                case (0x0E): //LD C,n
-
+                case (0x0E): //LD C,n8
+                    ld(&c);
                     break;
                 case (0x0F): //RRCA
 
@@ -100,7 +100,7 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x12): //LD (DE),A
-
+                    ld(DE,a);
                     break;
                 case (0x13): //INC DE
 
@@ -112,7 +112,7 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x16): //LD D,d8
-
+                    ld(&d);
                     break;
                 case (0x17): //RLA
 
@@ -124,7 +124,7 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x1A): //LD A,(DE)
-
+                    ld(&a,DE);
                     break;
                 case (0x1B): //DEC DE
 
@@ -136,7 +136,7 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x1E): //LD E,d8
-
+                    ld(&e);
                     break;
                 case (0x1F): //RRA
 
@@ -145,10 +145,10 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x21): //LD HL,d16
-
+                    ld(&h,&l);
                     break;
                 case (0x22): //LD (HL+),A
-
+                    ld(HL+1,a);
                     break;
                 case (0x23): //INC HL
 
@@ -160,7 +160,7 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x26): //LD H,d8
-
+                    ld(&h);
                     break;
                 case (0x27): //DAA
 
@@ -172,7 +172,7 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x2A): //LD A,(HL+)
-
+                    ld(&a,(uint16_t)(HL+1));
                     break;
                 case (0x2B): //DEC HL
 
@@ -184,7 +184,7 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x2E): //LD L,d8
-
+                    ld(&l);
                     break;
                 case (0x2F): //CPL
 
@@ -193,13 +193,13 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x31): //LD SP,d16
-
+                    ld(&sp);
                     break;
                 case (0x32): //LD (HL-),A
-
+                    ld(HL-1,a);
                     break;
                 case (0x33): //INC SP
-
+                    increment(&sp);
                     break;
                 case (0x34): //INC (HL)
 
@@ -208,7 +208,7 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x36): //LD (HL),d8
-
+                    ld(HL);
                     break;
                 case (0x37): //SCF
 
@@ -220,7 +220,7 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x3A): //LD A,(HL-)
-
+                    ld(&a,(uint16_t)(HL-1));
                     break;
                 case (0x3B): //DEC SP
 
@@ -232,7 +232,7 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x3E): //LD A,d8
-
+                    ld(&a);
                     break;
                 case (0x3F): //CCF
 
@@ -243,28 +243,28 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x41): //LD B,C
-                    load(&b,c);
+                    ld(&b,c);
                     break;
                 case (0x42): //LD B,D
-                    load(&b,d);
+                    ld(&b,d);
                     break;
                 case (0x43): //LD B,E
-                    load(&b,e);
+                    ld(&b,e);
                     break;
                 case (0x44): //LD B,H
-                    load(&b,h);
+                    ld(&b,h);
                     break;
                 case (0x45): //LD B,L
-                    load(&b,l);
+                    ld(&b,l);
                     break;
-                case (0x46): //LD B,((HL)
-                    load_from_mem(&b,HL);
+                case (0x46): //LD B,(HL)
+                    ld(&b,HL);
                     break;
                 case (0x47): //LD B,A
-                    load(&b,a);
+                    ld(&b,a);
                     break;
                 case (0x48): //LD C,B
-                    load(&c,b);
+                    ld(&c,b);
                     break;
                 case (0x49): //LD C,C
                     // unnecesary to implement
@@ -272,28 +272,28 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x4A): //LD C,D
-                    load(&c,d);
+                    ld(&c,d);
                     break;
                 case (0x4B): //LD C,E
-                    load(&c,e);
+                    ld(&c,e);
                     break;
                 case (0x4C): //LD C,H
-                    load(&c,h);
+                    ld(&c,h);
                     break;
                 case (0x4D): //LD C,L
-                    load(&c,l);
+                    ld(&c,l);
                     break;
                 case (0x4E): //LD C,(HL)
-                    load_from_mem(&c,HL);
+                    ld(&c,HL);
                     break;
                 case (0x4F): //LD C,A
-                    load(&c,a);
+                    ld(&c,a);
                     break;
                 case (0x50): //LD D,B
-                    load(&d,b);
+                    ld(&d,b);
                     break;
                 case (0x51): //LD D,B
-                    load(&d,c);
+                    ld(&d,c);
                     break;
                 case (0x52): //LD D,D
                     //no need to implement
@@ -301,28 +301,28 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x53): //LD D,E
-                    load(&d,e);
+                    ld(&d,e);
                     break;
                 case (0x54): //LD D,H
-                    load(&d,h);
+                    ld(&d,h);
                     break;
                 case (0x55): //LD D,L
-                    load(&d,l);
+                    ld(&d,l);
                     break;
                 case (0x56): //LD D,(HL)
-                    load_from_mem(&d,HL);
+                    ld(&d,HL);
                     break;
                 case (0x57): //LD D,A
-                    load(&d,a);
+                    ld(&d,a);
                     break;
                 case (0x58): //LD E,B
-                    load(&e,b);
+                    ld(&e,b);
                     break;
                 case (0x59): //LD E,C
-                    load(&e,c);
+                    ld(&e,c);
                     break;
                 case (0x5A): //LD E,D
-                    load(&e,d);
+                    ld(&e,d);
                     break;
                 case (0x5B): //LD E,E
                     //no need to implement lel
@@ -330,28 +330,28 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x5C): //LD E,H
-                    load(&e,h);
+                    ld(&e,h);
                     break;
                 case (0x5D): //LD E,L
-                    load(&e,l);
+                    ld(&e,l);
                     break;
                 case (0x5E): //LD E,(HL)
-                    load_from_mem(&e,HL);
+                    ld(&e,HL);
                     break;
                 case (0x5F): //LD E,A
-                    load(&e,a);
+                    ld(&e,a);
                     break;
                 case (0x60): //ld H,L
-                    load(&h,b);
+                    ld(&h,b);
                     break;
                 case (0x61): //ld H,C
-                    load(&h,c);
+                    ld(&h,c);
                     break;
                 case (0x62): //ld H,D
-                    load(&h,d);
+                    ld(&h,d);
                     break;
                 case (0x63): //ld H,E
-                    load(&h,e);
+                    ld(&h,e);
                     break;
                 case (0x64): //ld H,H
                     //no need to implement
@@ -359,28 +359,28 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x65): //ld H,L
-                    load(&h,l);
+                    ld(&h,l);
                     break;
                 case (0x66): // ld H,(HL)
-                    load_from_mem(&h,HL);
+                    ld(&h,HL);
                     break;
                 case (0x67): //ld H,A
-                    load(&h,a);
+                    ld(&h,a);
                     break;
                 case (0x68): //ld L,B
-                    load(&l,b);
+                    ld(&l,b);
                     break;
                 case (0x69): //ld L,C
-                    load(&l,c);
+                    ld(&l,c);
                     break;
                 case (0x6A): //ld L,D
-                    load(&l,d);
+                    ld(&l,d);
                     break;
                 case (0x6B): //ld L,E
-                    load(&l,e);
+                    ld(&l,e);
                     break;
                 case (0x6C): //ld l,H
-                    load(&l,h);
+                    ld(&l,h);
                     break;
                 case (0x6D): //ld L,L
                     //unnecesary to implement
@@ -388,55 +388,55 @@ void interpret(uint8_t dissassembly){
                     pc++;
                     break;
                 case (0x6E): //ld L,(HL)
-                    load_from_mem(&l,HL);
+                    ld(&l,HL);
                     break;
                 case (0x6F): //ld L,A
-                    load(&l,a);
+                    ld(&l,a);
                     break;
                 case (0x70): //1d(HL),B
-                    load_to_mem(HL,b);
+                    ld(HL,b);
                     break;
                 case (0x71): //1d(HL),C
-                    load_to_mem(HL,c);
+                    ld(HL,c);
                     break;
                 case (0x72): //1d(HL),D
-                    load_to_mem(HL,d);
+                    ld(HL,d);
                     break;
                 case (0x73): //1d(HL),E
-                    load_to_mem(HL,e);
+                    ld(HL,e);
                     break;
                 case (0x74): //1d(HL),H
-                    load_to_mem(HL,h);
+                    ld(HL,h);
                     break;
                 case (0x75): //1d(HL),L
-                    load_to_mem(HL,l);
+                    ld(HL,l);
                     break;
                 case (0x76): //HALT
                     halt();
                     break;
                 case (0x77): //1d(HL),A
-                    load_to_mem(HL,a);
+                    ld(HL,a);
                     break;
                 case (0x78): //ld A,B
-                    load(&a,b);
+                    ld(&a,b);
                     break;
                 case (0x79): //ld A,C
-                    load(&a,c);
+                    ld(&a,c);
                     break;
                 case (0x7A): //ld A,D
-                    load(&a,d);
+                    ld(&a,d);
                     break;
                 case (0x7B): //ld A,E
-                    load(&a,e);
+                    ld(&a,e);
                     break;
                 case (0x7C): //ld A,H
-                    load(&a,h);
+                    ld(&a,h);
                     break;
                 case (0x7D): //ld A,L
-                    load(&a,l);
+                    ld(&a,l);
                     break;
                 case (0x7E): //ld A,(HL)
-                    load_from_mem(&a,HL);
+                    ld(&a,HL);
                     break;
                 case (0x7F): //ld A,A
                     //unnecesary to execute

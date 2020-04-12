@@ -6,6 +6,7 @@ currently im still trying to understand every opcode
 
 - [GBCPUman](http://marc.rawer.de/Gameboy/Docs/GBCPUman.pdf) contains some errors but still usefull to get an idea
 - great opcode table [opcode table](http://www.pastraiser.com/cpu/gameboy/gameboy_opcodes.html)
+- another opcode table [here](https://izik1.github.io/gbops/index.html)
 - great wiki about gameboy development [gbdev wiki](http://gbdev.gg8.se/wiki/articles/Main_Page)
 - [the cycle accurate game boy docs](https://github.com/AntonioND/giibiiadvance/blob/master/docs/TCAGBD.pdf)
 - [blargs gb test roms](https://github.com/retrio/gb-test-roms)

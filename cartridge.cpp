@@ -5,4 +5,10 @@
 #include "cartridge.h"
 using namespace std;
 
-uint8_t cartridge[0x200000];
+uint8_t cartridge[0x800000];
+
+
+void load_rom(string path){
+
+
+}

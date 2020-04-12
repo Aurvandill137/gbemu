@@ -29,37 +29,51 @@ void nop(){
     pc++;
     cpu_cycles = 4;
 }
-
-void load(uint8_t *a, uint8_t b){
-    *a = b;
+//LDr8,r8
+void ld(uint8_t *a,uint8_t b){
+    *a=b;
     cpu_cycles = 4;
     pc++;
 }
-void load_to_mem(uint16_t address, uint8_t data){
-    write_address(data, address);
+//LD SP,d16
+void ld(uint16_t *sp){
+    uint16_t read = read_address(pc+1)<<8;
+    read |= read_address(pc+2);
+    *sp = read;
+    cpu_cycles = 12;
+    pc+=3;
+}
+//LDr8,d8
+void ld(uint8_t *a){
+    uint8_t b = read_address(pc+1);
+    *a=b;
     cpu_cycles = 8;
+    pc+=2;
+}
+//LD(HL),d8
+void ld(uint16_t address){
+    write_address(read_address(pc+1),address);
+    cpu_cycles+=12;
     pc++;
 }
-void load_from_mem(uint8_t *reg, uint16_t address){
-    *reg = read_address(address);
-    cpu_cycles = 8;
+//LD(HL),r8
+void ld(uint16_t address,uint8_t b){
+    write_address(b,address);
+    cpu_cycles+=8;
+    pc+=2;
+}
+//LDr8,(HL)
+void ld(uint8_t *a,uint16_t address){
+    *a=read_address(address);
+    cpu_cycles+=8;
     pc++;
 }
-void load_2B(uint8_t *reg1, uint8_t *reg2){
+//LDr16,d16
+void ld(uint8_t *reg1, uint8_t *reg2){
     *reg1 = read_address(pc+1);
     *reg2 = read_address(pc+2);
     cpu_cycles = 12;
     pc+=3;
-}
-void load_1B(uint8_t *reg){
-    *reg = read_address(pc+1);
-    pc+=2;
-    cpu_cycles+=2;
-}
-void load_1B(uint16_t address){
-    write_address(read_address(pc+1), address);
-    pc+=2;
-    cpu_cycles+=2;
 }
 
 void increment(uint8_t *var){
@@ -115,6 +129,15 @@ void increment(uint8_t *var1, uint8_t *var2){
     }
     *var1 = x>>8;
     *var2 = x&0x00FF;
+    cpu_cycles = 8;
+    pc++;
+}
+void increment(uint16_t *sp){
+    if(*sp == 0xFFFF){
+        *sp=0;
+    }else {
+        *sp++;
+    }
     cpu_cycles = 8;
     pc++;
 }

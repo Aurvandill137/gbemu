@@ -4,7 +4,8 @@
 
 #ifndef GBEMU_CARTRIDGE_H
 #define GBEMU_CARTRIDGE_H
-
-
+#include <string>
+#include <iostream>
+void load_rom(std::string path);
 
 #endif //GBEMU_MMU_H
