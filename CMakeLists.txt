@@ -4,9 +4,3 @@ project(gb_emu)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(gb_emu main.cpp cpu.cpp cpu.h mmu.cpp mmu.h opcode_functions.h opcode_functions.cpp cartridge.cpp cartridge.h)
-
-find_package(OpenGL REQUIRED)
-
-include_directories( ${OPENGL_INCLUDE_DIRS} )
-
-target_link_libraries(gb_emu ${OPENGL_LIBRARIES})
