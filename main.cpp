@@ -4,96 +4,81 @@
 #include <iostream>
 #include "cpu.h"
 #include "mmu.h"
-#include "GL/glew.h"
-#include "GL/freeglut.h"
-#define WINDOW_TITLE_PREFIX "Chapter 1"
+#include <GL/freeglut.h>
+#include <GL/glu.h>
+
+#define WINDOW_TITLE "Chapter 1"
+#define HEIGHT 144
+#define WIDTH 160
 
 using namespace std;
+
+struct pixel{
+  GLfloat r = 0.0;
+  GLfloat g = 0.0;
+  GLfloat b = 0.0;
+};
+
+pixel display[HEIGHT][WIDTH];
+
 
 //TODO: add graphics
 //TODO: add sound emulation
 //TODO: add cpu cycle emulation
 
-int
-  CurrentWidth = 800,
-  CurrentHeight = 600,
-  WindowHandle = 0;
-
-void Initialize(int, char*[]);
-void InitWindow(int, char*[]);
-void ResizeFunction(int, int);
-void RenderFunction(void);
-
-int main(int argc, char* argv[])
-{
-
-    extern uint8_t mem[];
-    
-
-    cout << "Hello, World!" << std::endl;
-    return 0;
-  Initialize(argc, argv);
-
-  glutMainLoop();
-  
-  exit(EXIT_SUCCESS);
+void idle(){                   
+	glPointSize(((glutGet(GLUT_WINDOW_WIDTH)/WIDTH)+(glutGet(GLUT_WINDOW_HEIGHT)/HEIGHT))/2.0);
+  //glOrtho(0,glutGet(GLUT_WINDOW_WIDTH),0,glutGet(GLUT_WINDOW_HEIGHT),-1,1);
+	glutPostRedisplay();
 }
 
-void Initialize(int argc, char* argv[])
-{
-  InitWindow(argc, argv);
-  
-  fprintf(
-    stdout,
-    "INFO: OpenGL Version: %s\n",
-    glGetString(GL_VERSION)
-  );
 
-  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+void render(){
+	
+	for(uint8_t x = 0; x < HEIGHT; x++){
+    for(uint8_t y = 0; y < WIDTH; y++){
+      glColor3f(display[x][y].r, display[x][y].g, display[x][y].r); 
+      glBegin(GL_POINTS);
+        glVertex2i(x,y);
+      glEnd();
+    }
+    cout<<(int)x<<endl;
+  }
+	
+
+	glFlush();	
 }
 
-void InitWindow(int argc, char* argv[])
-{
-  glutInit(&argc, argv);
-  
-  glutInitContextVersion(4, 0);
-  glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
-  glutInitContextProfile(GLUT_CORE_PROFILE);
+int main(int argc, char* argv[]){
 
-  glutSetOption(
-    GLUT_ACTION_ON_WINDOW_CLOSE,
-    GLUT_ACTION_GLUTMAINLOOP_RETURNS
-  );
-  
-  glutInitWindowSize(CurrentWidth, CurrentHeight);
-
-  glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-
-  WindowHandle = glutCreateWindow(WINDOW_TITLE_PREFIX);
-
-  if(WindowHandle < 1) {
-    fprintf(
-      stderr,
-      "ERROR: Could not create a new rendering window.\n"
-    );
-    exit(EXIT_FAILURE);
+   for(uint8_t x = 0; x < HEIGHT; x++){
+    for(uint8_t y = 0; y < WIDTH; y++){
+      display[x][y].r = (x+y)/255.0;
+      display[x][y].g = (2*x+y)/255.0;
+      display[x][y].b = (3*x+y)/255.0;
+    }
   }
 
-  glutReshapeFunc(ResizeFunction);
-  glutDisplayFunc(RenderFunction);
-}
+  extern uint8_t mem[];
+    
+  cout << "Hello, World!" << std::endl;
+  
+  glutInit(&argc,argv);
+  glutInitDisplayMode(GLUT_SINGLE);
+  glutInitWindowSize(WIDTH,HEIGHT);
+  glutCreateWindow(WINDOW_TITLE);
+  glClearColor(0,0,0,0);
+	glClear(GL_COLOR_BUFFER_BIT);
+  glMatrixMode(GL_PROJECTION);
+  glDisable(GL_POINT_SMOOTH);
+	glLoadIdentity();
+  glOrtho(0,WIDTH,0,HEIGHT,-1,1);
+  //glOrtho(0,glutGet(GLUT_WINDOW_WIDTH),0,glutGet(GLUT_WINDOW_HEIGHT),-1,1);
+  glPointSize(1);
+  glutDisplayFunc(render);
+  glutIdleFunc(idle);
 
-void ResizeFunction(int Width, int Height)
-{
-  CurrentWidth = Width;
-  CurrentHeight = Height;
-  glViewport(0, 0, CurrentWidth, CurrentHeight);
-}
-
-void RenderFunction(void)
-{
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  glutSwapBuffers();
-  glutPostRedisplay();
+ 
+  glutMainLoop();
+  return 0;
 }

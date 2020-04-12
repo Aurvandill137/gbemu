@@ -9,20 +9,44 @@ void clear_flag(uint8_t flag);
 void halt();
 void nop();
 //LD Functions
-//LD r16,d16
-void ld(uint8_t *reg1, uint8_t *reg2);
-//LD SP,d16
-void ld(uint16_t *sp);
 //LD r8,r8
 void ld(uint8_t *a,uint8_t b);
 //LD r8,d8
 void ld(uint8_t *a);
-//LD (HL),d8
-void ld(uint16_t address);
+//LD r16,d16
+void ld(uint8_t *reg1, uint8_t *reg2);
 //LD (HL),r8
 void ld(uint16_t address,uint8_t b);
+//LD (HL),d8
+void ld(uint16_t address);
 //LD r8,(HL)
 void ld(uint8_t *a,uint16_t address);
+
+//LD (r16),a
+void ld_a(uint16_t adress);
+//LD (d16),A
+void ld_a();
+//LDH (d16),A
+void ldh();
+//LDH (C),A
+void ldh(uint8_t c);
+//LD A,(r16)
+void ld_to_a(uint16_t path);
+//LD A,(d16)
+void ld_to_a();
+//LDH A,(d16)
+void ldh_to_a();
+//LDH A,(C)
+void ldh_to_a(uint8_t c);
+//LD (HLI),A
+void ldi_a();
+//LD (HLD),A
+void ldd_a();
+//LD A,(HLI)
+void ldi_to_a();
+//LD A,(HLD)
+void ldd_to_a();
+
 
 //increment and decrement functions
 void increment(uint8_t *var);

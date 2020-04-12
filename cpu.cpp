@@ -193,7 +193,7 @@ void interpret(uint8_t dissassembly){
 
                     break;
                 case (0x31): //LD SP,d16
-                    ld(&sp);
+                    
                     break;
                 case (0x32): //LD (HL-),A
                     ld(HL-1,a);
