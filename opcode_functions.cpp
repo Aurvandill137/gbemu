@@ -49,7 +49,7 @@ void ld(uint8_t *a){
     uint8_t b = read_address(pc+1);
     *a=b;
     cpu_cycles = 2;
-    pc++;
+    pc+=2;
 }
 
 //LDr16,d16
@@ -57,7 +57,7 @@ void ld(uint8_t *reg1, uint8_t *reg2){
     *reg1 = read_address(pc+1);
     *reg2 = read_address(pc+2);
     cpu_cycles = 3;
-    pc++;
+    pc+=3;
 }
 
 //LD(HL),r8
@@ -71,7 +71,7 @@ void ld(uint16_t address,uint8_t b){
 void ld(uint16_t address){
     write_address(read_address(pc+1),address);
     cpu_cycles+=3;
-    pc++;
+    pc+=2;
 }
 //LDr8,(HL)
 void ld(uint8_t *a,uint16_t address){
@@ -91,7 +91,7 @@ void ld_a(){
     uint16_t tmp = (read_address(pc+1)<<8) | read_address(pc+2);
     write_address(a,tmp);
     cpu_cycles+=2;
-    pc++;
+    pc+=2;
 }
 //LDH (d16),A
 void ldh(){
@@ -101,7 +101,7 @@ void ldh(){
         write_address(a,tmp);
     }
     cpu_cycles+=4;
-    pc++;
+    pc+=2;
 }
 //LDH (C),A
 void ldh(uint8_t c){
@@ -121,7 +121,7 @@ void ld_to_a(){
     uint16_t tmp = (read_address(pc+1)<<8) | read_address(pc+2);
     a=read_address(tmp);
     cpu_cycles+=4;
-    pc++;
+    pc+=3;
 }
 //LDH A,(d16)
 void ldh_to_a(){
@@ -130,7 +130,7 @@ void ldh_to_a(){
         a=read_address(tmp);
     }
     cpu_cycles+=3;
-    pc++;
+    pc+=2;
 }
 //LDH A,(C)
 void ldh_to_a(uint8_t c){
@@ -159,14 +159,65 @@ void ldd_a(){
 }
 //LD A,(HLI)
 void ldi_to_a(){
-
+    a = read_address(HL);
+    uint16_t tmp = HL;
+    tmp++;
+    h = tmp>>8;
+    l = tmp;
+    cpu_cycles+=2;
+    pc++;
 }
 //LD A,(HLD)
 void ldd_to_a(){
+    a = read_address(HL);
+    uint16_t tmp = HL;
+    tmp--;
+    h = tmp>>8;
+    l = tmp;
+    cpu_cycles+=2;
+    pc++;
+}
+//LD SP,d16
+void ld_sp(){
 
 }
+//LD [d16],SP
+void ld_sp_to_mem(){
+    uint16_t address = read_address(pc+1)<<8 | read_address(pc+2);
+    write_address(uint8_t(sp>>8), address);
+    write_address(uint8_t(sp),address+1);
+    cpu_cycles+=5;
+    pc +=3;
 
+}
+//LD HL,SP+d8
+void ld_hl_sp_d8(){
+    int8_t d8 = (int8_t)read_address(pc+1);
+    uint16_t tmp = sp+d8;
+    h = tmp>>8;
+    l=tmp;
+    clear_flag(ZEROFLAG);
+    clear_flag(SUBTRACTFLAG);
+    if((int32_t(d8) + uint32_t(pc)) > 0xFFFF){
+        set_flag(CARRYFLAG);
+    } else {
+        clear_flag(CARRYFLAG);
+    }
+    if(((pc & 0x0FFF) + (int16_t) d8) > 0x0FFF){
+        set_flag(CARRYFLAG);
+    } else {
+        clear_flag(CARRYFLAG);
+    }
 
+    cpu_cycles+=3;
+    pc+=2;
+}
+//LD SP,HL
+void ld_sp_hl(){
+    sp = HL;
+    cpu_cycles +=2;
+    pc++;
+}
 
 
 //                  INCREMENT/DECREMENT
@@ -256,6 +307,15 @@ void decrement(uint8_t *var1, uint8_t *var2){
     }
     *var1 = x>>8;
     *var2 = x&0x00FF;
+    cpu_cycles = 2;
+    pc++;
+}
+void decrement(uint16_t *sp){
+    if(*sp == 0xFFFF){
+        *sp=0;
+    }else {
+        *sp++;
+    }
     cpu_cycles = 2;
     pc++;
 }
@@ -398,4 +458,105 @@ void set_flag(uint8_t flag){
 }
 void clear_flag(uint8_t flag){
      flags &= ~(1<<flag);
+}
+
+//ALU
+////////////////////////////////////////////////////////////////////////////////////////
+
+//ADC A,r8
+void alu_adc(uint8_t r8){
+
+}
+//ADC A,[HL]
+void alu_adc(uint16_t address){
+
+}
+//ADC A,n8
+void alu_adc(){
+
+}
+//ADD A,r8
+void alu_add(uint8_t r8){
+
+}
+//ADD A,[HL]
+void alu_add(uint16_t address){
+
+}
+//ADD A,n8
+void alu_add(){
+
+}
+//ADD HL,r16
+void alu_add_HL(uint16_t r16){
+
+}
+//AND A,r8
+void alu_and(uint8_t r8){
+
+}
+//AND A,[HL]
+void alu_and(uint16_t address){
+
+}
+//AND A,n8
+void alu_and(){
+
+}
+//CP A,r8
+void alu_cp(uint8_t r8){}
+//CP A,[HL]
+void alu_cp(uint16_t address){
+
+}
+//CP A,n8
+void alu_cp(){
+}
+//OR A,r8
+void alu_or(uint8_t r8){
+
+}
+//OR A,[HL]
+void alu_or(uint16_t address){
+
+}
+//OR A,n8
+void alu_or(){
+    
+}
+//SBC A,r8
+void alu_sbc(uint8_t r8){
+    
+}
+//SBC A,[HL]
+void alu_sbc(uint16_t address){
+    
+}
+//SBC A,n8
+void alu_sbc(){
+    
+}
+//SUB A,r8
+void alu_sub(uint8_t r8){
+
+}
+//SUB A,[HL]
+void alu_sub(uint16_t address){
+    
+}
+//SUB A,n8
+void alu_sub(){
+    
+}
+//XOR A,r8
+void alu_xor(uint8_t r8){
+    
+}
+//XOR A,[HL]
+void alu_xor(uint16_t address){
+    
+}
+//XOR A,n8
+void alu_xor(){
+    
 }

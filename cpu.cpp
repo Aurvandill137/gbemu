@@ -103,13 +103,13 @@ void interpret(uint8_t dissassembly){
                     ld(DE,a);
                     break;
                 case (0x13): //INC DE
-
+                    increment(&d,&e);
                     break;
                 case (0x14): //INC D
-
+                    increment(&d);
                     break;
                 case (0x15): //DEC D
-
+                    decrement(&d);
                     break;
                 case (0x16): //LD D,d8
                     ld(&d);
@@ -127,13 +127,13 @@ void interpret(uint8_t dissassembly){
                     ld(&a,DE);
                     break;
                 case (0x1B): //DEC DE
-
+                    decrement(&d,&e);
                     break;
                 case (0x1C): //INC E
-
+                    increment(&e);
                     break;
                 case (0x1D): //DEC E
-
+                    decrement(&e);
                     break;
                 case (0x1E): //LD E,d8
                     ld(&e);
@@ -151,13 +151,13 @@ void interpret(uint8_t dissassembly){
                     ld(HL+1,a);
                     break;
                 case (0x23): //INC HL
-
+                    increment(&h,&l);
                     break;
                 case (0x24): //INC H
-
+                    increment(&h);
                     break;
                 case (0x25): //DEC H
-
+                    decrement(&h);
                     break;
                 case (0x26): //LD H,d8
                     ld(&h);
@@ -175,13 +175,13 @@ void interpret(uint8_t dissassembly){
                     ld(&a,(uint16_t)(HL+1));
                     break;
                 case (0x2B): //DEC HL
-
+                    decrement(&h,&l);
                     break;
                 case (0x2C): //INC L
-
+                    increment(&l);
                     break;
                 case (0x2D): //DEC L
-
+                    decrement(&l);
                     break;
                 case (0x2E): //LD L,d8
                     ld(&l);
@@ -202,10 +202,10 @@ void interpret(uint8_t dissassembly){
                     increment(&sp);
                     break;
                 case (0x34): //INC (HL)
-
+                    increment(HL);
                     break;
                 case (0x35): //DEC (HL)
-
+                    decrement(HL);
                     break;
                 case (0x36): //LD (HL),d8
                     ld(HL);
@@ -223,7 +223,7 @@ void interpret(uint8_t dissassembly){
                     ld(&a,(uint16_t)(HL-1));
                     break;
                 case (0x3B): //DEC SP
-
+                    sp--;
                     break;
                 case (0x3C): //INC A
 
