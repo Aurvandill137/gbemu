@@ -20,18 +20,53 @@ extern uint8_t extended_opcode;
 extern uint8_t cpu_cycles;
 
 
+
+
+//misc
+///////////////////////////////////////////////////////////////////
+//HALT
 void halt(){
 
     //TODO: implement halt
     pc++;
 }
+//NOP
 void nop(){
     pc++;
     cpu_cycles = 1;
 }
+//CCF
+void ccf(){
+    flags = flags^(1 << CARRYFLAG);
+    cpu_cycles += 1;
+    pc++;
+}
+//CPL
+void cpl(){
+    a = ~a;
+    cpu_cycles += 1;
+    pc++;
+}
+//DAA
+void daa(){
 
+}
+//DI
+void di(){
 
+}
+//EI
+void ei(){
 
+}
+//SCF
+void scf(){
+
+}
+//STOP
+void stop(){
+
+}
 
 
 //            LOADs
@@ -385,7 +420,7 @@ void set(uint8_t bit, uint16_t address){
 }
 void bit(uint8_t bittest, uint8_t *var){
     cpu_cycles+=2;
-    pc++;
+    pc+=2;
     clear_flag(SUBTRACTFLAG);
     set_flag(HALFCARRYFLAG);
     if ((*var&(1<<bittest))==0){
@@ -395,7 +430,7 @@ void bit(uint8_t bittest, uint8_t *var){
     }
 }
 void bit(uint8_t bittest, uint16_t address){
-    cpu_cycles+=2;
+    cpu_cycles+=1;
     uint8_t x = read_address(address);
     bit(bittest,&x);
 }
@@ -465,27 +500,159 @@ void clear_flag(uint8_t flag){
 
 //ADC A,r8
 void alu_adc(uint8_t r8){
-
+    uint16_t n = a+r8;
+    if(flags&(1<<CARRYFLAG)){
+        n++;
+    }
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else{
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    if(((a&0x0F)+(r8&0x0F))&0x10 == 0x10){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    if((uint16_t)n > 0xFF){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    a = n&&0xFF;
+    cpu_cycles++;
+    pc++;
 }
 //ADC A,[HL]
 void alu_adc(uint16_t address){
-
+    uint8_t r8 = read_address(address);
+    uint16_t n = a+r8;
+    n=a+r8;
+    if(flags&(1<<CARRYFLAG)){
+        n++;
+    }
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else{
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    if(((a&0x0F)+(r8&0x0F))&0x10 == 0x10){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    if((uint16_t)n > 0xFF){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    a = n&&0xFF;
+    cpu_cycles+=2;
+    pc++;
 }
 //ADC A,n8
 void alu_adc(){
-
+    uint8_t r8 = read_address(pc+1);
+    uint16_t n = a+r8;
+    n=a+r8;
+    if(flags&(1<<CARRYFLAG)){
+        n++;
+    }
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else{
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    if(((a&0x0F)+(r8&0x0F))&0x10 == 0x10){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    if((uint16_t)n > 0xFF){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    a = n&&0xFF;
+    cpu_cycles+=2;
+    pc+=2;
 }
 //ADD A,r8
 void alu_add(uint8_t r8){
+    uint16_t n = a+r8;
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else{
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    if(((a&0x0F)+(r8&0x0F))&0x10 == 0x10){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    if((uint16_t)n > 0xFF){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    a = n&&0xFF;
+    cpu_cycles++;
+    pc++;
 
 }
 //ADD A,[HL]
 void alu_add(uint16_t address){
-
+    uint8_t r8 = read_address(address);
+    uint16_t n = a+r8;
+    n=a+r8;
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else{
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    if(((a&0x0F)+(r8&0x0F))&0x10 == 0x10){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    if((uint16_t)n > 0xFF){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    a = n&&0xFF;
+    cpu_cycles+=2;
+    pc++;
 }
 //ADD A,n8
 void alu_add(){
-
+    uint8_t r8 = read_address(pc+1);
+    uint16_t n = a+r8;
+    n=a+r8;
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else{
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    if(((a&0x0F)+(r8&0x0F))&0x10 == 0x10){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    if((uint16_t)n > 0xFF){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    a = n&&0xFF;
+    cpu_cycles+=2;
+    pc+=2;
 }
 //ADD HL,r16
 void alu_add_HL(uint16_t r16){
@@ -493,36 +660,163 @@ void alu_add_HL(uint16_t r16){
 }
 //AND A,r8
 void alu_and(uint8_t r8){
-
+    a = a&r8;
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else {
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    set_flag(HALFCARRYFLAG);
+    clear_flag(CARRYFLAG);
+    cpu_cycles+=1;
+    pc++;
 }
 //AND A,[HL]
 void alu_and(uint16_t address){
-
+    uint8_t r8 = read_address(address);
+    a = a&r8;
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else {
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    set_flag(HALFCARRYFLAG);
+    clear_flag(CARRYFLAG);
+    cpu_cycles+=2;
+    pc++;
 }
 //AND A,n8
 void alu_and(){
-
+    uint8_t r8 = read_address(pc+1);
+    a = a&r8;
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else {
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    set_flag(HALFCARRYFLAG);
+    clear_flag(CARRYFLAG);
+    cpu_cycles+=2;
+    pc+=2;
 }
 //CP A,r8
-void alu_cp(uint8_t r8){}
+void alu_cp(uint8_t r8){
+    uint16_t tmp = (uint16_t) a - r8;
+    if(tmp == 0){
+        set_flag(ZEROFLAG);
+    } else {
+        clear_flag(ZEROFLAG);
+    }
+    set_flag(SUBTRACTFLAG);
+    if(((a&0x0F)+(r8&0x0F))&0x10 == 0x10){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    if(tmp > 0xFF){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    cpu_cycles+=1;
+    pc++;
+
+}
 //CP A,[HL]
 void alu_cp(uint16_t address){
+    uint8_t r8 = read_address(address);
+    uint16_t tmp = (uint16_t) a - r8;
+    if(tmp == 0){
+        set_flag(ZEROFLAG);
+    } else {
+        clear_flag(ZEROFLAG);
+    }
+    set_flag(SUBTRACTFLAG);
+    if(((a&0x0F)+(r8&0x0F))&0x10 == 0x10){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    if(tmp > 0xFF){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    cpu_cycles+=2;
+    pc++;
 
 }
 //CP A,n8
 void alu_cp(){
+    uint8_t r8 = read_address(pc+1);
+    uint16_t tmp = (uint16_t) a - r8;
+    if(tmp == 0){
+        set_flag(ZEROFLAG);
+    } else {
+        clear_flag(ZEROFLAG);
+    }
+    set_flag(SUBTRACTFLAG);
+    if(((a&0x0F)+(r8&0x0F))&0x10 == 0x10){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    if(tmp > 0xFF){
+        set_flag(HALFCARRYFLAG);
+    } else {
+        clear_flag(HALFCARRYFLAG);
+    }
+    cpu_cycles+=2;
+    pc+=2;
 }
 //OR A,r8
 void alu_or(uint8_t r8){
 
+    a = a|r8;
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else {
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    clear_flag(HALFCARRYFLAG);
+    clear_flag(CARRYFLAG);
+    pc++;
+    cpu_cycles+=1;
 }
 //OR A,[HL]
 void alu_or(uint16_t address){
+    uint8_t r8 = read_address(address);
+    a = a|r8;
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else {
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    clear_flag(HALFCARRYFLAG);
+    clear_flag(CARRYFLAG);
+    pc++;
+    cpu_cycles+=2;
 
 }
 //OR A,n8
 void alu_or(){
-    
+    uint8_t r8 = read_address(pc+1);
+    a = a|r8;
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else {
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    clear_flag(HALFCARRYFLAG);
+    clear_flag(CARRYFLAG);
+    pc+=2;
+    cpu_cycles+=2;
 }
 //SBC A,r8
 void alu_sbc(uint8_t r8){
@@ -550,13 +844,45 @@ void alu_sub(){
 }
 //XOR A,r8
 void alu_xor(uint8_t r8){
-    
+    a = a^r8;
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else {
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    clear_flag(HALFCARRYFLAG);
+    clear_flag(CARRYFLAG);
+    pc++;
+    cpu_cycles+=1;
 }
 //XOR A,[HL]
 void alu_xor(uint16_t address){
-    
+    uint8_t r8 = read_address(address);
+    a = a^r8;
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else {
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    clear_flag(HALFCARRYFLAG);
+    clear_flag(CARRYFLAG);
+    pc++;
+    cpu_cycles+=2;
 }
 //XOR A,n8
 void alu_xor(){
-    
+    uint8_t r8 = read_address(pc+1);
+    a = a^r8;
+    if(a == 0){
+        set_flag(ZEROFLAG);
+    } else {
+        clear_flag(ZEROFLAG);
+    }
+    clear_flag(SUBTRACTFLAG);
+    clear_flag(HALFCARRYFLAG);
+    clear_flag(CARRYFLAG);
+    pc+=2;
+    cpu_cycles+=2;
 }

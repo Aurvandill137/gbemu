@@ -5,9 +5,26 @@
 void set_flag(uint8_t flag);
 void clear_flag(uint8_t flag);
 
-//general
+//misc
+///////////////////////////////////////////////////////////////////
+//HALT
 void halt();
+//NOP
 void nop();
+//CCF
+void ccf();
+//CPL
+void cpl();
+//DAA
+void daa();
+//DI
+void di();
+//EI
+void ei();
+//SCF
+void scf();
+//STOP
+void stop();
 
 //LD Functions
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,6 +143,7 @@ void decrement(uint16_t *sp);
 void decrement(uint16_t address);
 
 //bit Logic Operations
+///////////////////////////////////////////////////////////////////////////////////////
 void swap(uint8_t *var);
 void swap(uint16_t address);
 void rlc(uint8_t *var);
@@ -136,5 +154,8 @@ void set(uint8_t bit, uint8_t *reg);
 void set(uint8_t bit, uint16_t address);
 void bit(uint8_t bittest, uint8_t *var);
 void bit(uint8_t bittest, uint16_t address);
+
+
+
 
 #endif //GBEMU_OPCODE_FUNCTIONS_H

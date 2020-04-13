@@ -25,8 +25,8 @@ uint8_t l;
  * c = carry flag
  */
 uint8_t flags; //z s h c 0 0 0 0
-uint16_t sp;
-uint16_t pc;
+uint16_t sp = 0xFF00;
+uint16_t pc = 0x0000;
 
 uint8_t extended_opcode = 0;
 uint8_t cpu_cycles = 0;
